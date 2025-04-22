@@ -133,8 +133,8 @@
       font-size: 1.2rem;
     }
 
-    /* Login and Sign-up Page Styles */
-    #loginPage, #signupPage {
+    /* Login Page Styles */
+    #loginPage, #signUpPage {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -145,7 +145,7 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
-    #loginPage input, #signupPage input {
+    #loginPage input, #signUpPage input {
       padding: 12px;
       margin: 10px;
       border-radius: 10px;
@@ -155,7 +155,7 @@
       font-size: 1.1rem;
     }
 
-    #loginPage button, #signupPage button {
+    #loginPage button, #signUpPage button {
       padding: 15px;
       background-color: #1e90ff;
       color: white;
@@ -166,8 +166,25 @@
       transition: background-color 0.3s ease;
     }
 
-    #loginPage button:hover, #signupPage button:hover {
+    #loginPage button:hover, #signUpPage button:hover {
       background-color: #0066cc;
+    }
+
+    /* Sign Up Page Styles */
+    .switch-to-signup {
+      color: #1e90ff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: none;
+    }
+
+    .switch-to-login {
+      color: #1e90ff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -182,18 +199,19 @@
       <input type="password" id="password" placeholder="Password" required />
       <button type="submit">Login</button>
     </form>
-    <p>Belum punya akun? <a href="#" onclick="showSignupPage()">Daftar</a></p>
+    <a href="#" class="switch-to-signup" onclick="showSignUpPage()">Belum punya akun? Daftar sekarang</a>
   </div>
 
-  <!-- Sign-Up Page -->
-  <div id="signupPage" class="container" style="display:none;">
+  <!-- Sign Up Page -->
+  <div id="signUpPage" class="container" style="display:none;">
     <h1>Daftar CopyCat</h1>
-    <form onsubmit="signupUser(event)">
-      <input type="text" id="newUsername" placeholder="Username" required />
-      <input type="password" id="newPassword" placeholder="Password" required />
+    <form onsubmit="signUpUser(event)">
+      <input type="text" id="signUpUsername" placeholder="Username" required />
+      <input type="password" id="signUpPassword" placeholder="Password" required />
+      <input type="password" id="confirmPassword" placeholder="Konfirmasi Password" required />
       <button type="submit">Daftar</button>
     </form>
-    <p>Sudah punya akun? <a href="#" onclick="showLoginPage()">Masuk</a></p>
+    <a href="#" class="switch-to-login" onclick="showLoginPage()">Sudah punya akun? Login</a>
   </div>
 
   <!-- Landing Page -->
@@ -207,69 +225,48 @@
     </div>
   </div>
 
-  <!-- Latar Belakang Page -->
-  <section id="aboutPage">
-    <h2>Latar Belakang</h2>
-    <p><strong>CopyCat</strong> adalah platform digital yang dirancang untuk melindungi karya-karya kreatif Anda. Di dunia digital saat ini, melindungi hak cipta dan karya asli sangat penting. Kami hadir untuk membantu para kreator dengan menyediakan perlindungan yang mudah diakses dan transparan.</p>
-    <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
-  </section>
-
-  <!-- Galeri Karya Page -->
-  <section id="galleryPage">
-    <h2>Galeri Karya</h2>
-    <p>Ini adalah galeri karya dari kreator yang telah melindungi hak cipta mereka menggunakan CopyCat. [Coming soon]</p>
-    <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
-  </section>
-
-  <!-- Daftarkan Karya Form Page -->
-  <section id="formPage">
-    <h2>Daftarkan Karya Anda</h2>
-    <form id="karyaForm" onsubmit="handleFormSubmit(event)">
-      <label for="title">Judul Karya:</label>
-      <input type="text" id="title" name="title" required>
-
-      <label for="desc">Deskripsi Karya:</label>
-      <textarea id="desc" name="desc" required></textarea>
-
-      <label for="author">Nama Kreator:</label>
-      <input type="text" id="author" name="author" required>
-
-      <label for="type">Jenis Karya:</label>
-      <select id="type" name="type" required>
-        <option value="digital">Digital Art</option>
-        <option value="music">Music</option>
-        <option value="literature">Literature</option>
-      </select>
-
-      <button type="submit">Kirim</button>
-    </form>
-    <div id="thankYouMessage">
-      <p><strong>Terima kasih!</strong> Karyamu berhasil didaftarkan.</p>
-    </div>
-    <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
-  </section>
-
   <script>
-    // Function to show the sign-up page
-    function showSignupPage() {
-      document.getElementById('loginPage').style.display = 'none';
-      document.getElementById('signupPage').style.display = 'block';
-    }
-
     // Function to show the login page
     function showLoginPage() {
-      document.getElementById('signupPage').style.display = 'none';
       document.getElementById('loginPage').style.display = 'block';
+      document.getElementById('signUpPage').style.display = 'none';
     }
 
-    // Function to handle the signup process
-    function signupUser(event) {
+    // Function to show the sign-up page
+    function showSignUpPage() {
+      document.getElementById('signUpPage').style.display = 'block';
+      document.getElementById('loginPage').style.display = 'none';
+    }
+
+    // Simulate user login
+    function loginUser(event) {
       event.preventDefault();
-      let newUsername = document.getElementById('newUsername').value;
-      let newPassword = document.getElementById('newPassword').value;
-      alert("Daftar berhasil! Username: " + newUsername);
-      document.getElementById('signupPage').style.display = 'none';
-      document.getElementById('loginPage').style.display = 'block';
+      let username = document.getElementById('username').value;
+      let password = document.getElementById('password').value;
+
+      if (username === "admin" && password === "password123") {
+        alert("Login successful!");
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('landingPage').style.display = 'block';
+      } else {
+        alert("Username or Password incorrect");
+      }
+    }
+
+    // Simulate user sign-up
+    function signUpUser(event) {
+      event.preventDefault();
+      let username = document.getElementById('signUpUsername').value;
+      let password = document.getElementById('signUpPassword').value;
+      let confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        alert("Password dan Konfirmasi Password tidak cocok!");
+        return;
+      }
+      
+      alert("Akun berhasil dibuat!");
+      showLoginPage();
     }
 
     // Function to show the background page
@@ -296,37 +293,6 @@
       document.getElementById('aboutPage').style.display = 'none';
       document.getElementById('galleryPage').style.display = 'none';
       document.getElementById('formPage').style.display = 'none';
-    }
-
-    // Handle the form submission
-    function handleFormSubmit(event) {
-      event.preventDefault();
-      document.getElementById('formPage').style.display = 'none';
-      document.getElementById('thankYouMessage').style.display = 'block';
-      localStorage.setItem('formData', JSON.stringify({
-        title: document.getElementById('title').value,
-        description: document.getElementById('desc').value,
-        author: document.getElementById('author').value,
-        type: document.getElementById('type').value
-      }));
-      setTimeout(() => {
-        hidePages();
-      }, 3000); // Return to landing after 3 seconds
-    }
-
-    // Simulate user login
-    function loginUser(event) {
-      event.preventDefault();
-      let username = document.getElementById('username').value;
-      let password = document.getElementById('password').value;
-
-      if (username === "admin" && password === "password123") {
-        alert("Login successful!");
-        document.getElementById('loginPage').style.display = 'none';
-        document.getElementById('landingPage').style.display = 'block';
-      } else {
-        alert("Username or Password incorrect");
-      }
     }
   </script>
 </body>
