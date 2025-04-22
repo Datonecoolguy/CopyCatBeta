@@ -133,8 +133,8 @@
       font-size: 1.2rem;
     }
 
-    /* Login Page Styles */
-    #loginPage {
+    /* Login and Sign-up Page Styles */
+    #loginPage, #signupPage {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -145,7 +145,7 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
-    #loginPage input {
+    #loginPage input, #signupPage input {
       padding: 12px;
       margin: 10px;
       border-radius: 10px;
@@ -155,7 +155,7 @@
       font-size: 1.1rem;
     }
 
-    #loginPage button {
+    #loginPage button, #signupPage button {
       padding: 15px;
       background-color: #1e90ff;
       color: white;
@@ -166,7 +166,7 @@
       transition: background-color 0.3s ease;
     }
 
-    #loginPage button:hover {
+    #loginPage button:hover, #signupPage button:hover {
       background-color: #0066cc;
     }
   </style>
@@ -182,6 +182,18 @@
       <input type="password" id="password" placeholder="Password" required />
       <button type="submit">Login</button>
     </form>
+    <p>Belum punya akun? <a href="#" onclick="showSignupPage()">Daftar</a></p>
+  </div>
+
+  <!-- Sign-Up Page -->
+  <div id="signupPage" class="container" style="display:none;">
+    <h1>Daftar CopyCat</h1>
+    <form onsubmit="signupUser(event)">
+      <input type="text" id="newUsername" placeholder="Username" required />
+      <input type="password" id="newPassword" placeholder="Password" required />
+      <button type="submit">Daftar</button>
+    </form>
+    <p>Sudah punya akun? <a href="#" onclick="showLoginPage()">Masuk</a></p>
   </div>
 
   <!-- Landing Page -->
@@ -238,6 +250,28 @@
   </section>
 
   <script>
+    // Function to show the sign-up page
+    function showSignupPage() {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('signupPage').style.display = 'block';
+    }
+
+    // Function to show the login page
+    function showLoginPage() {
+      document.getElementById('signupPage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'block';
+    }
+
+    // Function to handle the signup process
+    function signupUser(event) {
+      event.preventDefault();
+      let newUsername = document.getElementById('newUsername').value;
+      let newPassword = document.getElementById('newPassword').value;
+      alert("Daftar berhasil! Username: " + newUsername);
+      document.getElementById('signupPage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'block';
+    }
+
     // Function to show the background page
     function showBackground() {
       document.getElementById('aboutPage').style.display = 'block';
