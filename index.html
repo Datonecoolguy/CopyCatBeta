@@ -132,6 +132,11 @@
       color: #32CD32;
       font-size: 1.2rem;
     }
+
+    #registerPage {
+      display: block;
+      margin-top: 20px;
+    }
   </style>
 </head>
 
@@ -144,7 +149,7 @@
     <div id="buttons">
       <button onclick="showBackground()">Latar Belakang</button>
       <button onclick="showGallery()">Galeri Karya</button>
-      <button onclick="showForm()">Daftarkan Karya</button>
+      <button onclick="showRegister()">Buat Akun</button>
     </div>
   </div>
 
@@ -162,6 +167,25 @@
   <section id="galleryPage">
     <h2>Galeri Karya</h2>
     <p>Ini adalah galeri karya dari kreator yang telah melindungi hak cipta mereka menggunakan CopyCat. [Coming soon]</p>
+    <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
+  </section>
+
+  <!-- Register Form Page -->
+  <section id="registerPage">
+    <h2>Daftar Akun</h2>
+    <form id="registerForm" onsubmit="handleRegisterSubmit(event)">
+      <label for="username">Nama Pengguna:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Kata Sandi:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Daftar</button>
+    </form>
+    <p id="registerMessage" style="color: #32CD32;"></p>
     <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
   </section>
 
@@ -206,6 +230,12 @@
       document.getElementById('landingPage').style.display = 'none';
     }
 
+    // Function to show the register form
+    function showRegister() {
+      document.getElementById('registerPage').style.display = 'block';
+      document.getElementById('landingPage').style.display = 'none';
+    }
+
     // Function to show the form page
     function showForm() {
       document.getElementById('formPage').style.display = 'block';
@@ -217,10 +247,33 @@
       document.getElementById('landingPage').style.display = 'block';
       document.getElementById('aboutPage').style.display = 'none';
       document.getElementById('galleryPage').style.display = 'none';
+      document.getElementById('registerPage').style.display = 'none';
       document.getElementById('formPage').style.display = 'none';
     }
 
-    // Handle the form submission
+    // Handle the register form submission
+    function handleRegisterSubmit(event) {
+      event.preventDefault();
+
+      // Create an account object
+      const account = {
+        username: document.getElementById('username').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
+      };
+
+      // Save account data to localStorage
+      localStorage.setItem('userAccount', JSON.stringify(account));
+
+      document.getElementById('registerMessage').innerText = 'Akun berhasil dibuat!';
+
+      // Return to landing page after 3 seconds
+      setTimeout(() => {
+        hidePages();
+      }, 3000);
+    }
+
+    // Handle the karya form submission
     function handleFormSubmit(event) {
       event.preventDefault();
       document.getElementById('formPage').style.display = 'none';
