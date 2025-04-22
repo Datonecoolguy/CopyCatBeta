@@ -133,126 +133,166 @@
       font-size: 1.2rem;
     }
 
+    /* Login Page Styles */
     #loginPage {
-      display: block;
-      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #222;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #loginPage input {
+      padding: 12px;
+      margin: 10px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background-color: #444;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    #loginPage button {
+      padding: 15px;
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    #loginPage button:hover {
+      background-color: #0066cc;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Login / Register Page -->
+  <!-- Login Page -->
   <div id="loginPage" class="container">
-    <h1>CopyCat</h1>
-    <p>Selamat datang! Lindungi Karya Anda dengan Sistem Perlindungan Digital Cerdas</p>
-
-    <!-- Login Form -->
-    <section id="loginFormPage">
-      <h2>Masuk</h2>
-      <form id="loginForm" onsubmit="handleLoginSubmit(event)">
-        <label for="loginEmail">Email:</label>
-        <input type="email" id="loginEmail" name="loginEmail" required>
-
-        <label for="loginPassword">Kata Sandi:</label>
-        <input type="password" id="loginPassword" name="loginPassword" required>
-
-        <button type="submit">Masuk</button>
-      </form>
-      <p id="loginMessage" style="color: #ff6347;"></p>
-      <a href="#" class="back-button" onclick="showRegisterPage()">Buat Akun</a>
-    </section>
-
-    <!-- Register Form -->
-    <section id="registerFormPage" style="display:none;">
-      <h2>Daftar Akun</h2>
-      <form id="registerForm" onsubmit="handleRegisterSubmit(event)">
-        <label for="username">Nama Pengguna:</label>
-        <input type="text" id="username" name="username" required>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="password">Kata Sandi:</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="submit">Daftar</button>
-      </form>
-      <p id="registerMessage" style="color: #32CD32;"></p>
-      <a href="#" class="back-button" onclick="showLoginPage()">Sudah punya akun? Masuk</a>
-    </section>
+    <h1>Login CopyCat</h1>
+    <form onsubmit="loginUser(event)">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
   </div>
 
-  <!-- Pages for Content (hidden initially) -->
+  <!-- Landing Page -->
+  <div id="landingPage" class="container" style="display:none;">
+    <h1>CopyCat</h1>
+    <p>Lindungi Karya Anda dengan Sistem Perlindungan Digital Cerdas</p>
+    <div id="buttons">
+      <button onclick="showBackground()">Latar Belakang</button>
+      <button onclick="showGallery()">Galeri Karya</button>
+      <button onclick="showForm()">Daftarkan Karya</button>
+    </div>
+  </div>
+
+  <!-- Latar Belakang Page -->
   <section id="aboutPage">
     <h2>Latar Belakang</h2>
-    <p><strong>CopyCat</strong> adalah platform digital yang dirancang untuk melindungi karya-karya kreatif Anda...</p>
+    <p><strong>CopyCat</strong> adalah platform digital yang dirancang untuk melindungi karya-karya kreatif Anda. Di dunia digital saat ini, melindungi hak cipta dan karya asli sangat penting. Kami hadir untuk membantu para kreator dengan menyediakan perlindungan yang mudah diakses dan transparan.</p>
     <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
   </section>
 
+  <!-- Galeri Karya Page -->
   <section id="galleryPage">
     <h2>Galeri Karya</h2>
     <p>Ini adalah galeri karya dari kreator yang telah melindungi hak cipta mereka menggunakan CopyCat. [Coming soon]</p>
     <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
   </section>
 
+  <!-- Daftarkan Karya Form Page -->
+  <section id="formPage">
+    <h2>Daftarkan Karya Anda</h2>
+    <form id="karyaForm" onsubmit="handleFormSubmit(event)">
+      <label for="title">Judul Karya:</label>
+      <input type="text" id="title" name="title" required>
+
+      <label for="desc">Deskripsi Karya:</label>
+      <textarea id="desc" name="desc" required></textarea>
+
+      <label for="author">Nama Kreator:</label>
+      <input type="text" id="author" name="author" required>
+
+      <label for="type">Jenis Karya:</label>
+      <select id="type" name="type" required>
+        <option value="digital">Digital Art</option>
+        <option value="music">Music</option>
+        <option value="literature">Literature</option>
+      </select>
+
+      <button type="submit">Kirim</button>
+    </form>
+    <div id="thankYouMessage">
+      <p><strong>Terima kasih!</strong> Karyamu berhasil didaftarkan.</p>
+    </div>
+    <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
+  </section>
+
   <script>
-    // Function to show the login form page
-    function showLoginPage() {
-      document.getElementById('loginPage').style.display = 'block';
-      document.getElementById('registerFormPage').style.display = 'none';
-      document.getElementById('loginFormPage').style.display = 'block';
+    // Function to show the background page
+    function showBackground() {
+      document.getElementById('aboutPage').style.display = 'block';
+      document.getElementById('landingPage').style.display = 'none';
     }
 
-    // Function to show the register form page
-    function showRegisterPage() {
-      document.getElementById('loginPage').style.display = 'block';
-      document.getElementById('registerFormPage').style.display = 'block';
-      document.getElementById('loginFormPage').style.display = 'none';
+    // Function to show the gallery page
+    function showGallery() {
+      document.getElementById('galleryPage').style.display = 'block';
+      document.getElementById('landingPage').style.display = 'none';
     }
 
-    // Handle the login form submission
-    function handleLoginSubmit(event) {
-      event.preventDefault();
-
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-
-      const storedAccount = JSON.parse(localStorage.getItem('userAccount'));
-
-      if (storedAccount && storedAccount.email === email && storedAccount.password === password) {
-        document.getElementById('loginMessage').innerText = 'Login berhasil!';
-        setTimeout(() => {
-          hidePages();
-        }, 2000); // Return to landing after successful login
-      } else {
-        document.getElementById('loginMessage').innerText = 'Email atau kata sandi salah!';
-      }
+    // Function to show the form page
+    function showForm() {
+      document.getElementById('formPage').style.display = 'block';
+      document.getElementById('landingPage').style.display = 'none';
     }
 
-    // Handle the register form submission
-    function handleRegisterSubmit(event) {
-      event.preventDefault();
-
-      const account = {
-        username: document.getElementById('username').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value
-      };
-
-      localStorage.setItem('userAccount', JSON.stringify(account));
-
-      document.getElementById('registerMessage').innerText = 'Akun berhasil dibuat!';
-      setTimeout(() => {
-        showLoginPage(); // Switch to login page after successful registration
-      }, 3000);
-    }
-
-    // Hide all pages and return to the main landing page
+    // Function to hide all pages and return to landing page
     function hidePages() {
-      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('landingPage').style.display = 'block';
       document.getElementById('aboutPage').style.display = 'none';
       document.getElementById('galleryPage').style.display = 'none';
+      document.getElementById('formPage').style.display = 'none';
+    }
+
+    // Handle the form submission
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      document.getElementById('formPage').style.display = 'none';
+      document.getElementById('thankYouMessage').style.display = 'block';
+      localStorage.setItem('formData', JSON.stringify({
+        title: document.getElementById('title').value,
+        description: document.getElementById('desc').value,
+        author: document.getElementById('author').value,
+        type: document.getElementById('type').value
+      }));
+      setTimeout(() => {
+        hidePages();
+      }, 3000); // Return to landing after 3 seconds
+    }
+
+    // Simulate user login
+    function loginUser(event) {
+      event.preventDefault();
+      let username = document.getElementById('username').value;
+      let password = document.getElementById('password').value;
+
+      if (username === "admin" && password === "password123") {
+        alert("Login successful!");
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('landingPage').style.display = 'block';
+      } else {
+        alert("Username or Password incorrect");
+      }
     }
   </script>
 </body>
