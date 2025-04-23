@@ -1,159 +1,245 @@
-<!DOCTYPE html><html lang="id"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CopyCat.AI</title>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CopyCat - Lindungi Karyamu</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f2f5;
+    * {
       margin: 0;
       padding: 0;
-      color: #333;
-    }header {
-  background-color: #111;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-}
+      box-sizing: border-box;
+    }
+    body, html {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100%;
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  background-color: #222;
-  padding: 0.5rem;
-}
+    .container {
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border-radius: 12px;
+      background-color: #2a2a2a;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      padding: 40px 20px;
+    }
 
-nav button {
-  background-color: #444;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
 
-nav button:hover {
-  background-color: #666;
-}
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
 
-section {
-  display: none;
-  padding: 2rem;
-  max-width: 700px;
-  margin: auto;
-  background-color: white;
-  margin-top: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+    #buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 25px;
+    }
 
-section.active {
-  display: block;
-}
+    #buttons button {
+      background-color: #3b3b3b;
+      border: 1px solid #444;
+      color: white;
+      font-size: 1rem;
+      padding: 15px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+    #buttons button:hover {
+      background-color: #4a4a4a;
+      transform: translateY(-3px);
+    }
 
-input, textarea, select {
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-}
+    section {
+      display: none;
+      width: 100%;
+      background-color: #2a2a2a;
+      padding: 30px;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
 
-button[type="submit"] {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.75rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
+    .back-button {
+      margin-top: 30px;
+      color: #00aaff;
+      text-decoration: none;
+      font-size: 1rem;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
 
-#thankYouMessage {
-  display: none;
-  margin-top: 1rem;
-  background-color: #e6ffe6;
-  padding: 1rem;
-  border: 1px solid #8f8;
-  border-radius: 8px;
-}
+    .back-button:hover {
+      transform: translateY(-2px);
+    }
 
-.back-button {
-  display: block;
-  margin-top: 2rem;
-  text-align: center;
-  text-decoration: none;
-  color: #007bff;
-}
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
 
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #555;
+      background-color: #333;
+      color: white;
+      font-size: 1rem;
+    }
+
+    form button {
+      background-color: #00aaff;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      color: white;
+      margin-top: 10px;
+    }
+
+    form button:hover {
+      background-color: #008ecc;
+    }
+
+    #thankYouMessage {
+      display: none;
+      color: #00ff90;
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
   </style>
-</head><body>
-  <header>
+</head>
+<body>
+
+  <div id="landingPage" class="container">
     <h1>CopyCat</h1>
-    <p>Mari berkarya dan sebarkan kreativitasmu!</p>
-  </header>  <nav>
-    <button onclick="showPage('home')">Beranda</button>
-    <button onclick="showPage('about')">Pengertian</button>
-    <button onclick="showPage('formPage')">Daftarkan Karya</button>
-  </nav>  <section id="home" class="active">
-    <h2>Selamat Datang di CopyCat</h2>
-    <p>Tempat di mana kreativitas bertemu dengan inovasi. Eksplorasi berbagai karya dari kreator muda penuh semangat.</p>
-  </section>  <section id="about">
-    <h2>Pengertian</h2>
-    <p>Website ini adalah wadah digital untuk menampung dan memamerkan karya-karya terbaik dari para pelajar dan pemuda kreatif. Setiap individu memiliki kesempatan untuk menunjukkan bakat dan idenya kepada dunia melalui platform ini. Dengan adanya sistem pendaftaran karya, pengunjung dapat mengeksplorasi berbagai jenis karya mulai dari seni digital, musik, hingga sastra.</p>
-  </section>  <section id="formPage">
+    <p>Lindungi Karya Anda dengan Sistem Perlindungan Digital Cerdas</p>
+    <div id="buttons">
+      <button onclick="showBackground()">Latar Belakang</button>
+      <button onclick="showGallery()">Galeri Karya</button>
+      <button onclick="showForm()">Daftarkan Karya</button>
+    </div>
+  </div>
+
+  <section id="aboutPage">
+    <h2>Latar Belakang</h2>
+    <p><strong>CopyCat</strong> adalah platform digital yang dirancang untuk melindungi karya-karya kreatif Anda. Di dunia digital saat ini, melindungi hak cipta dan karya asli sangat penting. Kami hadir untuk membantu para kreator dengan menyediakan perlindungan yang mudah diakses dan transparan.</p>
+    <p><strong>Tujuan Proyek:</strong><br> Tujuan utama dari proyek ini adalah untuk memberikan sistem perlindungan yang dapat diandalkan bagi karya digital. Kami ingin memastikan bahwa setiap karya yang diposting memiliki perlindungan hukum dan dapat diakses oleh pihak yang berwenang.</p>
+    <p><strong>Manfaat:</strong><br> - Melindungi karya Anda dari penyalahgunaan digital<br> - Memberikan sistem verifikasi yang aman<br> - Meningkatkan visibilitas karya kreatif Anda dengan cara yang aman</p>
+    <p><strong>Fungsi:</strong><br> CopyCat berfungsi untuk memberikan para kreator ruang yang aman untuk memamerkan dan mendaftarkan karya mereka sambil memastikan bahwa karya tersebut dilindungi dari plagiarisme dan penyalahgunaan.</p>
+    <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
+  </section>
+
+  <section id="galleryPage">
+    <h2>Galeri Karya</h2>
+    <p>Ini adalah galeri karya dari kreator yang telah melindungi hak cipta mereka menggunakan CopyCat. [Coming soon]</p>
+    <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
+  </section>
+
+  <section id="formPage">
     <h2>Daftarkan Karya Anda</h2>
     <form id="karyaForm" onsubmit="handleFormSubmit(event)">
       <label for="title">Judul Karya:</label>
-      <input type="text" id="title" name="title" required><label for="desc">Deskripsi Karya:</label>
-  <textarea id="desc" name="desc" required></textarea>
+      <input type="text" id="title" name="title" required>
 
-  <label for="author">Nama Kreator:</label>
-  <input type="text" id="author" name="author" required>
+      <label for="desc">Deskripsi Karya:</label>
+      <textarea id="desc" name="desc" required></textarea>
 
-  <label for="type">Jenis Karya:</label>
-  <select id="type" name="type" required>
-    <option value="digital">Digital Art</option>
-    <option value="music">Music</option>
-    <option value="literature">Literature</option>
-  </select>
+      <label for="author">Nama Kreator:</label>
+      <input type="text" id="author" name="author" required>
 
-  <label for="file">Unggah Karya (Gimik):</label>
-  <input type="file" id="file" name="file" />
+      <label for="type">Jenis Karya:</label>
+      <select id="type" name="type" required>
+        <option value="digital">Digital Art</option>
+        <option value="music">Music</option>
+        <option value="literature">Literature</option>
+      </select>
 
-  <button type="submit">Kirim</button>
-</form>
+      <label for="file">Unggah Karya (Gimik):</label>
+      <input type="file" id="file" name="file" />
 
-<div id="thankYouMessage">
-  <p><strong>Terima kasih!</strong> Karyamu berhasil didaftarkan.</p>
-  <p>Hash Karya: <code id="hashOutput"></code></p>
-</div>
+      <button type="submit">Kirim</button>
+    </form>
+    <div id="thankYouMessage">
+      <p><strong>Terima kasih!</strong> Karyamu berhasil didaftarkan.</p>
+      <p>Hash Karya: <code id="hashOutput"></code></p>
+    </div>
+    <a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
+  </section>
 
-<a href="#" class="back-button" onclick="hidePages()">Kembali ke Halaman Utama</a>
+  <script>
+    function showBackground() {
+      document.getElementById('aboutPage').style.display = 'block';
+      document.getElementById('landingPage').style.display = 'none';
+    }
 
-  </section>  <script>
-    function showPage(id) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    function showGallery() {
+      document.getElementById('galleryPage').style.display = 'block';
+      document.getElementById('landingPage').style.display = 'none';
+    }
+
+    function showForm() {
+      document.getElementById('formPage').style.display = 'block';
+      document.getElementById('landingPage').style.display = 'none';
     }
 
     function hidePages() {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById('home').classList.add('active');
+      document.getElementById('landingPage').style.display = 'block';
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('galleryPage').style.display = 'none';
+      document.getElementById('formPage').style.display = 'none';
+      document.getElementById('thankYouMessage').style.display = 'none';
     }
 
-    function handleFormSubmit(e) {
-      e.preventDefault();
-      const data = `${Date.now()}-${document.getElementById("title").value}`;
-      const hash = btoa(data).substring(0, 12);
-      document.getElementById("hashOutput").innerText = hash;
-      document.getElementById("thankYouMessage").style.display = 'block';
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      document.getElementById('formPage').style.display = 'none';
+      document.getElementById('thankYouMessage').style.display = 'block';
+      localStorage.setItem('formData', JSON.stringify({
+        title: document.getElementById('title').value,
+        description: document.getElementById('desc').value,
+        author: document.getElementById('author').value,
+        type: document.getElementById('type').value
+      }));
+      const hash = generateHash();
+      document.getElementById('hashOutput').textContent = hash;
+      setTimeout(() => {
+        hidePages();
+      }, 3000);
     }
-  </script></body></html>
+
+    function generateHash() {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < 20; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result;
+    }
+  </script>
+
+</body>
+</html>
